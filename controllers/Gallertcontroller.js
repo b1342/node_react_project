@@ -7,7 +7,7 @@ const Gallery=require('../models/Gallery')
 const getallgallery=('/',async(req,res)=>{
     const gallery=await Gallery.find()
     res.json(gallery.map(g => ({
-        id: g._id,
+        _id: g._id,
         status: g.status,
         public:g.public,
         uploade_by:g.uploade_by,

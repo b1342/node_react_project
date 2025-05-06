@@ -11,6 +11,7 @@ app.use(cors(corsOptions))// הפעלת רשימה לבנה
 app.use(express.json())// היכולת לעשות PUT וPOST
 
 app.use('/api/gallery',require('./router/galleryRouter'))
+app.use('/api/plans',require('./router/planRouter'))
 
 mongoose.connection.once('open', () => {//פונקציה לבדיקה שיש חיבור כל הזמן
     console.log('Connected to MongoDB')
