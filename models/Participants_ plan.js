@@ -3,24 +3,26 @@ const Participants_planSchema = new mongoose.Schema(
 
     {
         userName: {
-            typy: String,
-            required: true
+            type: String
+            
         },
         userId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Users'
+            ref: 'Users',
+            required: true
         },
         planName: {
-            typy: String,
-            required: true
+            type: String
+           
         },
         planId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Plans'
+            ref: 'Plans',
+            required: true
         },
         score: {
             type: Number,
-            required: true
+            default: 0
         },
     },
 
