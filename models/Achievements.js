@@ -4,7 +4,8 @@ const achievementsSchema = new mongoose.Schema(
        userId:
         { 
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Users' 
+            ref: 'Users',
+            required: true
         }
         ,
         achievement: {
@@ -12,7 +13,8 @@ const achievementsSchema = new mongoose.Schema(
             required: true
         },
         date: {
-            type: String
+            type: Date,
+            default: Date.now
         }
     },
     {
