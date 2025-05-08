@@ -12,7 +12,7 @@ app.use(express.json())// היכולת לעשות PUT וPOST
 
 app.use('/api/gallery',require('./router/galleryRouter'))
 app.use('/api/plans',require('./router/planRouter'))
-
+app.use('/api/users', require('./router/usersRouter'))
 mongoose.connection.once('open', () => {//פונקציה לבדיקה שיש חיבור כל הזמן
     console.log('Connected to MongoDB')
     app.listen(PORT, () => console.log(`Server running on port

@@ -6,7 +6,7 @@ router.get('/',planscontroller.getallplans)
 router.get('/:id',planscontroller.getplansbyid)
 router.post('/',planscontroller.createplan)
 router.put('/',planscontroller.updateplan)
-router.put('/',planscontroller.updatenumber_of_particpants)
+router.put('/number_of_particpants',planscontroller.updatenumber_of_particpants)
 router.delete('/',planscontroller.deleteplan)
 
 module.exports=router
