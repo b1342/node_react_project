@@ -15,6 +15,7 @@ app.use('/api/plans',require('./router/planRouter'))
 app.use('/api/users', require('./router/usersRouter'))
 app.use('/api/achievements', require('./router/achievementsRouter'))
 app.use('/api/participants', require('./router/participants_planRouter'))
+app.use("/api/auth", require("./router/authRoutes"))//הגדרת הAPI של האוטנטיקציה
 
 mongoose.connection.once('open', () => {//פונקציה לבדיקה שיש חיבור כל הזמן
     console.log('Connected to MongoDB')

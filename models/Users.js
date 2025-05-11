@@ -34,6 +34,10 @@ const userSchema = new mongoose.Schema(
             enum: ['student', 'staff', 'manager'],
             required: true,
             
+        },
+        active: {
+            type: Boolean,
+            default: true
         }
 
     },

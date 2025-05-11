@@ -1,5 +1,6 @@
 const Achievements = require("../models/Achievements")
 
+
 const getAllAchievementsById = ('/', async (req, res) => {
     
     const { userId } = req.params
