@@ -12,7 +12,7 @@ app.use(express.json())// היכולת לעשות PUT וPOST
 
 app.use('/api/gallery',require('./router/galleryRouter'))
 app.use('/api/plans',require('./router/planRouter'))
-app.use('/api/users', require('./router/usersRouter'))
+app.use('/api/user', require('./router/usersRouter'))
 app.use('/api/achievements', require('./router/achievementsRouter'))
 app.use('/api/participants', require('./router/participants_planRouter'))
 app.use("/api/auth", require("./router/authRoutes"))//הגדרת הAPI של האוטנטיקציה

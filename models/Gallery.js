@@ -27,11 +27,6 @@ const galleryschma=new mongoose.Schema({
 }) 
 
 
-// galleryschma.virtual('imageSrc').get(function () {
-//   if (this.image != null && this.imageType != null) {
-//     return `data:${this.imageType};base64,${this.image.toString('base64')}`;
-//   }
-// });
 module.exports=mongoose.model("Gallery", galleryschma)
 
 

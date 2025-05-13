@@ -1,35 +1,29 @@
 const multer = require('multer');
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null,'./public/Uploads')
+    },
+    filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+      cb(null, file.fieldname + '-' + uniqueSuffix)
+    }
+  })
+  
+const upload = multer({ storage: storage })
 const Gallery=require('../models/Gallery')
+
 
 
 const GetAllGallery=('/',async(req,res)=>{
     const gallery=await Gallery.find()
-    res.json(gallery.map(g => ({
-        _id: g._id,
-        status: g.status,
-        public:g.public,
-        uploade_by:g.uploade_by,
-        imageType:g.imageType,
-        imageSrc: g.imageSrc
-      })));
+    res.json(gallery);
 
 })
 
 const GetsSpcGallery=('/',async(req,res)=>{
-    const type=req.params
+    const {type}=req.params
     const gallery = await Gallery.find({ status: type })
-    if(!gallery)
-        res.status(404).json({message:"gallery not found"})
-    res.json(gallery.map(g => ({
-        id: g._id,
-        status: g.status,
-        public:g.public,
-        uploade_by:g.uploade_by,
-        imageType:g.imageType,
-        imageSrc: g.imageSrc
-      })));
+    res.json(gallery);
 })
 
 const CreatNnew=('/',async(req,res)=>{
@@ -38,20 +32,22 @@ const CreatNnew=('/',async(req,res)=>{
         const img = req.file;
     
         const newGallery = new Gallery({
+          filename: img.filename,
           title,
           status,
           public,
           uploade_by,
-          image: img.buffer, 
+          image: req.file.path, 
           imageType: img.mimetype 
         });
     
-        await newGallery.save();
-        res.status(201).json(newGallery,{ message: 'Image uploaded successfully!' });
+        const savedImage=await newGallery.save();
+        res.json(`${savedImage} image saved`);
       } catch (err) {
         res.status(500).json({ error: err.message });
       }
     })
+
 const ChangeStatus=('/',async(req,res)=>{
     const{_id,status}=req.body
     if(!_id){
@@ -61,7 +57,7 @@ const ChangeStatus=('/',async(req,res)=>{
         res.status(400).json({message:"img not found..."})
     }
     img.status=status
-    const saver=img.save()
+    const saver=await img.save()
     res.json(saver)
 })
 
@@ -74,8 +70,8 @@ const ChangePublic=('/',async(req,res)=>{
         res.status(400).json({message:"img not found..."})
     }
     img.public=!public
-    const saver=img.save()
-    res.json(saver)
+    const saver=await img.save()
+    res.json(saver) 
 })
 
 const DeleteFromGallery=('/',async(req,res)=>{
