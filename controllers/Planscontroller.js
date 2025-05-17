@@ -16,6 +16,9 @@ const getplansbyid=('/',async(req,res)=>{
 
 const createplan=('/',async(req,res)=>{
     const{name,description,number_of_particpants}=req.body
+    if(!name||!description){
+        return res.status(400).json({message:"missing data"})
+    }
     const plan=await Plans.create({name,description,number_of_particpants})
     res.json(plan)
 })
@@ -37,7 +40,7 @@ const updateplan=('/',async(req,res)=>{
 })
 
 const updatenumber_of_particpants=('/',async(req,res)=>{
-    const{_id,number_of_particpants}=req.body
+    const{_id}=req.body
     if(!_id){
         res.status(400).json({message:"id is required"})
     }
@@ -45,7 +48,7 @@ const updatenumber_of_particpants=('/',async(req,res)=>{
     if(!plan){
         res.status(400).json({message:"dont found plan"})
     }
-    plan.number_of_particpants=number_of_particpants
+    plan.number_of_particpants=plan.number_of_particpants+1
     const saver = await plan.save()
     res.json(saver)
 })

@@ -2,13 +2,17 @@ const mongoose=require("mongoose")
 
 const planSchema=mongoose.Schema({
     name:{
-        type:String
+        type:String,
+        required:true
     },
     description:{
-        type:String
+        type:String,
+        required:true
     },
     number_of_particpants :{
-        type:Number
+        type:Number,
+        default:0
+
     }
 },{
     timestamps:true

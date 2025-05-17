@@ -1,7 +1,6 @@
 const express = require("express")
 const router = express.Router()
 const achievementControler = require("../controllers/AchievementsController")
-const verifyJWTManger=require('../middleware/verifyJWTManger')
 const verifyJWT=require('../middleware/verifyJWT')
 const verifyJWTStaff=require('../middleware/verifyJWTStaff')
 
