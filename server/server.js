@@ -23,5 +23,6 @@ mongoose.connection.once('open', () => {//פונקציה לבדיקה שיש ח�
     ${PORT}`))
     })
     mongoose.connection.on('error', err => {
-    console.log(err)
+    console.log(err) 
+    
     })
