@@ -3,17 +3,17 @@ import { Menubar } from 'primereact/menubar';
 import { InputText } from 'primereact/inputtext';
 import { Badge } from 'primereact/badge';
 import { Avatar } from 'primereact/avatar';
-import Login from './login'
+import Login from '../homeComp/login'
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'primereact/button';
 import { logOut } from '../redux/tokenSlice';
 
-export default function HomeStudent() {
+export default function HomeManager() {
     const { token, role, user } = useSelector((state) => state.token);
     const dispatch = useDispatch();
 
     const itemRenderer = (item) => (
-     
+
         <a className="flex align-items-center p-menuitem-link">
             <span className={item.icon} />
             <span className="mx-2">{item.label}</span>
@@ -23,64 +23,50 @@ export default function HomeStudent() {
     );
     const items = [
         {
-            label: 'Home',
+            label: 'בית',
             icon: 'pi pi-home'
         },
         {
-            label: 'Features',
+            label: 'תלמידים',
+            icon: 'pi pi-star'     
+        },
+        {
+            label: 'אנשי צוות',
             icon: 'pi pi-star'
         },
         {
-            label: 'Projects',
+            label: 'מבצעים',
+            icon: 'pi pi-star'
+        },
+        {
+            label: 'גלריה',
             icon: 'pi pi-search',
             items: [
                 {
-                    label: 'Core',
+                    label: 'מהזמן האחרון',
                     icon: 'pi pi-bolt',
-                    shortcut: '⌘+S',
-                    template: itemRenderer
                 },
                 {
-                    label: 'Blocks',
+                    label: 'יום בישיבה',
                     icon: 'pi pi-server',
-                    shortcut: '⌘+B',
-                    template: itemRenderer
+                    
                 },
                 {
-                    label: 'UI Kit',
+                    label: 'סיומים',
                     icon: 'pi pi-pencil',
-                    shortcut: '⌘+U',
-                    template: itemRenderer
+                    
+                },
+                {
+                    label: 'טיולים',
+                    icon: 'pi pi-pencil',
+                    
                 },
                 {
                     separator: true
-                },
-                {
-                    label: 'Templates',
-                    icon: 'pi pi-palette',
-                    items: [
-                        {
-                            label: 'Apollo',
-                            icon: 'pi pi-palette',
-                            badge: 2,
-                            template: itemRenderer
-                        },
-                        {
-                            label: 'Ultima',
-                            icon: 'pi pi-palette',
-                            badge: 3,
-                            template: itemRenderer
-                        }
-                    ]
                 }
             ]
         },
-        {
-            label: 'Contact',
-            icon: 'pi pi-envelope',
-            badge: 3,
-            template: itemRenderer
-        }
+        
     ];
     const logout = () => {
         dispatch(logOut());
@@ -89,9 +75,9 @@ export default function HomeStudent() {
     const start = <img alt="logo" src="https://primefaces.org/cdn/primereact/images/logo.png" height="40" className="mr-2"></img>;
     const end = (
         <div className="flex align-items-center gap-2">
-            {/* <button onClick={()=>{}}>login</button>
-            <login/> */}
-            <Button onClick={() => { logout() }}> להתנתקות </Button>
+        <Avatar label={user.name} size="large" shape="circle" className="mr-2" />
+        <h3>{role}</h3>
+        <Button onClick={() => { logout() }}> להתנתקות </Button>
         </div>
     );
 
