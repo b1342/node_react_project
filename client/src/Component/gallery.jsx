@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
-const PublicGallery = () => {
+const Gallery = () => {
   const location = useLocation();
   const {type } = location.state || {};
   return (
@@ -13,4 +13,4 @@ const PublicGallery = () => {
   );
 };
 
-export default PublicGallery;
+export default Gallery;

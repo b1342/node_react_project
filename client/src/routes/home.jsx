@@ -5,11 +5,11 @@ import { Badge } from 'primereact/badge';
 import { Avatar } from 'primereact/avatar';  
 import Login from '../homeComp/login'
 import { useDispatch,useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { Navigate,useNavigate } from 'react-router-dom';
 export default function Home() {
       const { token, role, user } = useSelector((state) => state.token);
-
-    const itemRenderer = (item) => (
+      const navigate =useNavigate();
+      const itemRenderer = (item) => (
         
         <a className="flex align-items-center p-menuitem-link">
             <span className={item.icon} />
@@ -21,15 +21,24 @@ export default function Home() {
     const items = [
         {
             label: 'בית',
-            icon: 'pi pi-home'
+            icon: 'pi pi-home',
+            command:()=>{
+                navigate('./')
+               }
         },
         {
             label: 'מראי מקומות',
-            icon: 'pi pi-star'
+            icon: 'pi pi-star',
+            command:()=>{
+                navigate('./referenceSources')
+               }
         },
         {
             label: ' זמני תפילות',
-            icon: 'pi pi-star'
+            icon: 'pi pi-star',
+            command:()=>{
+                navigate('./daveningTimes')
+               }
         },
         {
             label: 'גלריה',
@@ -38,20 +47,32 @@ export default function Home() {
                 {
                     label: 'מהזמן האחרון',
                     icon: 'pi pi-bolt',
+                    command:()=>{
+                        navigate('./home/gallery', { state: { type: 'from_the_last_time' } });
+                       }
                 },
                 {
                     label: 'יום בישיבה',
                     icon: 'pi pi-server',
+                    command:()=>{
+                        navigate('./home/gallery', { state: { type: 'day_in_yeshiva' } });
+                       }
                     
                 },
                 {
                     label: 'סיומים',
                     icon: 'pi pi-pencil',
+                    command:()=>{
+                        navigate('./home/gallery', { state: { type: 'syumim' } });
+                       }
                     
                 },
                 {
                     label: 'טיולים',
                     icon: 'pi pi-pencil',
+                    command:()=>{
+                        navigate('./home/gallery', { state: { type: 'trips' } });
+                       }
                     
                 },
                 {
@@ -64,8 +85,7 @@ export default function Home() {
     const start = <img alt="logo" src="https://primefaces.org/cdn/primereact/images/logo.png" height="40" className="mr-2"></img>;
     const end = (
         <div className="flex align-items-center gap-2">
-            {/* <button onClick={()=>{}}>login</button>
-            <login/> */}
+           
            <Login/>
         </div> 
     );

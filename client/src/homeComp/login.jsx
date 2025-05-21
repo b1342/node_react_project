@@ -5,7 +5,7 @@ import { InputText } from "primereact/inputtext";
 import axios from "axios";
 import { useDispatch, useSelector } from 'react-redux';
 import { setToken, setUser,setRole } from '../redux/tokenSlice';
-
+import { Navigate,useNavigate } from 'react-router-dom';
 const Login = () => {
       const { token, role, user } = useSelector((state) => state.token);
 
@@ -14,6 +14,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const dispatch = useDispatch();
+    const navigate =useNavigate();
 
     const handleLogin = async () => {
         try {
@@ -29,6 +30,7 @@ const Login = () => {
             dispatch(setToken(res.data.accessToken));
             setError('');
             setVisible(false);
+                navigate('./')
             // // כאן אפשר לשמור את הטוקן ב-localStorage או לבצע ניווט
             // localStorage.setItem('token', res.data.token);
             // window.location.reload(); // רענון הדף לאחר התחברות

@@ -7,11 +7,12 @@ import Login from '../homeComp/login'
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'primereact/button';
 import { logOut } from '../redux/tokenSlice';
+import { Navigate,useNavigate } from 'react-router-dom';
 
 export default function HomeManager() {
     const { token, role, user } = useSelector((state) => state.token);
     const dispatch = useDispatch();
-
+    const navigate =useNavigate();
     const itemRenderer = (item) => (
 
         <a className="flex align-items-center p-menuitem-link">
@@ -24,19 +25,31 @@ export default function HomeManager() {
     const items = [
         {
             label: 'בית',
-            icon: 'pi pi-home'
+            icon: 'pi pi-home',
+            command:()=>{
+                navigate('./');
+               }
         },
         {
             label: 'תלמידים',
-            icon: 'pi pi-star'     
+            icon: 'pi pi-star',
+            command:()=>{
+                navigate('./student')
+               }     
         },
         {
             label: 'אנשי צוות',
-            icon: 'pi pi-star'
+            icon: 'pi pi-star',
+            command:()=>{
+                navigate('./staff')
+               }
         },
         {
             label: 'מבצעים',
-            icon: 'pi pi-star'
+            icon: 'pi pi-star',
+            command:()=>{
+                navigate('./plan')
+               }
         },
         {
             label: 'גלריה',
@@ -45,20 +58,32 @@ export default function HomeManager() {
                 {
                     label: 'מהזמן האחרון',
                     icon: 'pi pi-bolt',
+                    command:()=>{
+                        navigate('./gallery', { state: { type: 'from_the_last_time' } });
+                       }
                 },
                 {
                     label: 'יום בישיבה',
                     icon: 'pi pi-server',
+                    command:()=>{
+                        navigate('./gallery', { state: { type: 'day_in_yeshiva' } });
+                       }
                     
                 },
                 {
                     label: 'סיומים',
                     icon: 'pi pi-pencil',
+                    command:()=>{
+                        navigate('./gallery', { state: { type: 'syumim' } });
+                       }
                     
                 },
                 {
                     label: 'טיולים',
                     icon: 'pi pi-pencil',
+                    command:()=>{
+                        navigate('./gallery', { state: { type: 'trips' } });
+                       }
                     
                 },
                 {
@@ -70,7 +95,8 @@ export default function HomeManager() {
     ];
     const logout = () => {
         dispatch(logOut());
-        
+        navigate('./')
+           
     }
     const start = <img alt="logo" src="https://primefaces.org/cdn/primereact/images/logo.png" height="40" className="mr-2"></img>;
     const end = (

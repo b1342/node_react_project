@@ -2,11 +2,10 @@ const Achievements = require("../models/Achievements")
 
 
 const getAllAchievementsById = ('/', async (req, res) => {
-    
     const { userId } = req.params
     if (!userId)
         return res.status(400).json({ message: 'enter userId' })
-    const allAchievements = await Achievements.find({userId }).lean()
+    const allAchievements = await Achievements.find({userId }).populate('userId').lean()
     if (!allAchievements || allAchievements.length === 0)
         return res.status(404).json({ message: 'achievements not found' })
     res.json(allAchievements)
