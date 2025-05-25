@@ -6,7 +6,7 @@ import { Galleria } from 'primereact/galleria';
 import ImageCard from './gallery/ImageCard';
 import UploadImageDialog from './gallery/UploadImage';
 const Gallery = () => {
-  const { token,role } = useSelector((state) => state.token);
+  const { token,role } = useSelector((state) => state.token);  
   const location = useLocation();
   const { type } = location.state || {};
   const [images, setImages] = useState([]);

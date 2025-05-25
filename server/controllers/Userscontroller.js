@@ -1,4 +1,6 @@
-const Users = require("../models/Users")
+const Participants_plan = require("../models/Participants_ plan");
+const Achievements = require("../models/Achievements");
+const Users = require("../models/Users");
 
 const getByType = ('/', async (req, res) => {
     const {status}=req.params
@@ -6,10 +8,11 @@ const getByType = ('/', async (req, res) => {
     if (!users) {    
         return res.status(404).json({ message: 'No users found' })
     }
+    console.log(users)  
     res.json(users)
 })
 
-const getUserById = ('/', async (req, res) => {
+const getUserById = ('/', async (req, res) => { 
     const {_id} = req.params
     if (!_id) {
         return res.status(400).json({ message: 'Missing data "id" ' })
@@ -62,15 +65,17 @@ const updateUser = ('/', async (req, res) => {
     res.json(`'${user.name}' updated`)
 })
 
-const deleteUser = ('/', async (req, res) => {
-    const { _id } = req.params
-    if (!_id)
-        return res.status(400).json({ message: 'enter id' })
-    const user = await Users.findById(_id).exec()
-    if (!user)
-        return res.status(404).json({ message: 'user not found' })
-    const result = await Users.deleteOne(user._id)
-    res.json(`'${user.name}' deleted`)
-})
+
+
+const deleteUser = async (req, res) => {
+    const { _id } = req.params;
+    if (!_id) return res.status(400).json({ message: 'Missing user id' });
+
+    await Achievements.deleteMany({ userId: _id });
+    await Participants_plan.deleteMany({ userId: _id });
+    await Users.deleteOne({ _id });
+
+    res.json({ message: "User and all related data deleted" });
+};
 
 module.exports = { getByType, getUserById, creatUser, updateUser, deleteUser }

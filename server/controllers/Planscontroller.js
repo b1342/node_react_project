@@ -1,4 +1,5 @@
 const Plans=require("../models/Plans")
+const Participants_plan=require("../models/Participants_ plan") 
 
 const getallplans=('/',async(req,res)=>{
     const plans=await Plans.find().lean()
@@ -53,17 +54,17 @@ const updatenumber_of_particpants=('/',async(req,res)=>{
     res.json(saver)
 })
 
-const deleteplan=('/',async(req,res)=>{
-    const{_id}=req.body
-    if(!_id){
-        res.status(400).json({message:"id is required"})
-    }
-    const plan =await Plans.findById(_id).exec()
-    if(!plan){
-        res.status(400).json({message:"dont found plan"})
-    }
-    const result=await Plans.deleteOne(plan)
-    res.json(result)
-})
+const deleteplan = async (req, res) => {
+    const { id } = req.params;
+    if (!id) return res.status(400).json({ message: 'Missing plan id' });
+
+    // מחיקת כל ההשתתפויות בתכנית
+    await Participants_plan.deleteMany({ planId: id });
+
+    // מחיקת התכנית עצמה
+    await Plans.deleteOne({ _id: id });
+
+    res.json({ message: "Plan and all related participants deleted" });
+};
 
 module.exports={getallplans,getplansbyid,createplan,updateplan,updatenumber_of_particpants,deleteplan}
