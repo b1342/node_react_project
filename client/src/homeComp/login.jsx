@@ -40,7 +40,8 @@ const Login = () => {
     };
 
     return (
-        <div className="card flex justify-content-center">
+        // <div className="card flex justify-content-center">
+        <>
             <Button label="התחברות" icon="pi pi-sign-in" onClick={() => setVisible(true)} />
             <Dialog
                 header="התחברות למערכת"
@@ -91,7 +92,7 @@ const Login = () => {
                     </div>
                 )}
             ></Dialog>
-        </div>
+        </>
     );
 };
 

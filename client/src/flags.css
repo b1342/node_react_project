@@ -18,6 +18,12 @@ img.flag {
 .flag-ae {
     background-position: 0 0.826446%;
 }
+.image-card:hover .image-hover img,
+.image-card:hover .image-hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    border: 2px solid #2196f3;
+    transform: scale(1.03);
+}
 .flag-af {
     background-position: 0 1.239669%;
 }

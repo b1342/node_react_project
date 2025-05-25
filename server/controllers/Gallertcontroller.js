@@ -26,18 +26,24 @@ const GetsSpcGallery=('/',async(req,res)=>{
     res.json(gallery);
 })
 
+const GetsSpcPublicGallery=('/',async(req,res)=>{
+    const {type}=req.params
+    const gallery = await Gallery.find({ status: type, public: true })
+    res.json(gallery);
+})
+
 const CreatNnew=('/',async(req,res)=>{
     try {
         const { title, status,public, uploade_by,} = req.body;
         const img = req.file;
-    
+        const imagePath = `public/Uploads/${img.filename}` ;
         const newGallery = new Gallery({
           filename: img.filename,
           title,
           status,
           public,
           uploade_by,
-          image: req.file.path, 
+          image: imagePath, 
           imageType: img.mimetype 
         });
     
@@ -62,14 +68,14 @@ const ChangeStatus=('/',async(req,res)=>{
 })
 
 const ChangePublic=('/',async(req,res)=>{
-    const {_id,public}=req.body
+    const {_id,ispublic}=req.body
     if(!_id){
         return res.status(400).json({message:'cant search without _id'})}
     const img=await Gallery.findById(_id).exec()
     if(!img){
         res.status(400).json({message:"img not found..."})
     }
-    img.public=!public
+    img.public=!ispublic
     const saver=await img.save()
     res.json(saver) 
 })
@@ -86,4 +92,4 @@ const DeleteFromGallery=('/',async(req,res)=>{
     res.json(saver)
 }) 
 
-module.exports={upload,ChangeStatus,ChangePublic,DeleteFromGallery,CreatNnew,GetsSpcGallery,GetAllGallery}
+module.exports={upload,ChangeStatus,GetsSpcPublicGallery,ChangePublic,DeleteFromGallery,CreatNnew,GetsSpcGallery,GetAllGallery}

@@ -1,6 +1,9 @@
 const mongoose=require('mongoose')
 const galleryschma=new mongoose.Schema({
-    filename:{
+  title:{
+        type: String
+      } ,  
+  filename:{
         type: String
       } ,
     status: {

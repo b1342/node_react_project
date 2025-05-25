@@ -9,7 +9,8 @@ const app = express() //הפעלת הפונקציה למשתנה APP
 connectDB() //קריאה לפונקציה שמפעילה את הDB
 app.use(cors(corsOptions))// הפעלת רשימה לבנה
 app.use(express.json())// היכולת לעשות PUT וPOST
-
+app.use(express.static('public'));
+app.use('/public', express.static('public'));
 app.use('/api/gallery',require('./router/galleryRouter'))
 app.use('/api/plans',require('./router/planRouter'))
 app.use('/api/user', require('./router/usersRouter'))
