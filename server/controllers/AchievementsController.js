@@ -6,8 +6,8 @@ const getAllAchievementsById = ('/', async (req, res) => {
     if (!userId)
         return res.status(400).json({ message: 'enter userId' })
     const allAchievements = await Achievements.find({userId }).populate('userId').lean()
-    if (!allAchievements || allAchievements.length === 0)
-        return res.status(404).json({ message: 'achievements not found' })
+    // if (!allAchievements || allAchievements.length === 0)
+    //     return res.status(404).json({ message: 'achievements not found' })
     res.json(allAchievements)
 })
 
