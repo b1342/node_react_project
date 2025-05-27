@@ -19,7 +19,8 @@ const createUser = async (token,Data,role) => {
 };
 
 
-const updateUser = async (updatedUserData,token) => { 
+const updateUser = async (token,updatedUserData) => { 
+    console.log(`updatedUserData`, updatedUserData, token);
     const user=await axios.put (`${usersServiceURL}`,updatedUserData,{headers:{Authorization:`Bearer ${token}`}})
     return user
 };

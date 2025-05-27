@@ -8,7 +8,7 @@ const getByType = ('/', async (req, res) => {
     if (!users) {    
         return res.status(404).json({ message: 'No users found' })
     }
-    console.log(users)  
+    // console.log(users)  
     res.json(users)
 })
 
@@ -40,7 +40,8 @@ const creatUser = ('/', async (req, res) => {
 
 
 const updateUser = ('/', async (req, res) => {
-    const { _id, name,identity_number, password, phone, address, email, date_of_birth, status } = req.body
+    const { _id, name,identity_number, phone, address, email, date_of_birth, status } = req.body
+    console.log(req.body)
     if (!_id)
         return res.status(400).json({ message: 'Missing data "id" ' })
     const user = await Users.findById(_id).exec()
@@ -51,7 +52,6 @@ const updateUser = ('/', async (req, res) => {
         return res.status(409).json({ message: 'Duplicate identity number' })
 
     user.name = name
-    user.password = password
     user.phone = phone
     user.address = address
     user.identity_number =identity_number

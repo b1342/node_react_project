@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const achievementsServiceURL = 'http://localhost:1111/api/achievement/';
+const achievementsServiceURL = 'http://localhost:1111/api/achievements/';
 
 
 const getAchivementsById = async (userId, token) => {

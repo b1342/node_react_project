@@ -5,6 +5,10 @@ import React, { useEffect, useState } from 'react';
 import usersService from '../services/userServices'
 import { useSelector } from 'react-redux';
 import UserDialog from './student/addStudent';
+import StudentAchievementDialog from './student/studentAchievement';
+import { useLocation } from 'react-router-dom';
+import UpdateUserDialog from './student/updateUser';
+
 const Student = ({}) => {
 const { token,role } = useSelector((state) => state.token);
     const [students, setStudents] = useState([]);
@@ -39,9 +43,13 @@ const { token,role } = useSelector((state) => state.token);
     const plans=()=>{
 
     }
-    const achievement = () => {
+    const achievement = (rowData) => {
+    return <StudentAchievementDialog userId={rowData._id} />;
+};
+const update = (rowData) => {
+   return <UpdateUserDialog user={rowData} setChange={setChange}/>
+}
 
-    }
 
     const usersTable = (users) => {
         return (
@@ -56,13 +64,14 @@ const { token,role } = useSelector((state) => state.token);
                 <Column header="מבצעים" body={plans} ></Column>
                 <Column header="השגים" body={achievement}></Column>
                 <Column header="מחיקה" body={deleteu}></Column>
+                <Column header="עדכון" body={update}></Column>
             </DataTable>
         )
     }
 
     return (
         <div>
-            <UserDialog setChange={setChange}/>
+           {role ==='manager'?<UserDialog setChange={setChange}/>:<></>} 
             {usersTable(students)}
         </div>
     );

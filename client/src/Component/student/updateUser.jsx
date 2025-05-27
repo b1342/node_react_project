@@ -7,34 +7,48 @@ import { Calendar } from 'primereact/calendar';
 import usersService from '../../services/userServices'
 import { useSelector } from 'react-redux';
 import { Toast } from "primereact/toast";
-
-export default function UserDialog({setChange}) {
-    const { token,role } = useSelector((state) => state.token);
-
+export default function UpdateUserDialog({ user, setChange }) {
+    const { token, role } = useSelector((state) => state.token);
+const toast = useRef(null);
     const [visible, setVisible] = useState(false);
     const [fields, setFields] = useState({
-        name: "",
-        identity_number: "",
-        password: "",
-        phone: "",
-        address: "",
-        email: "",
-        date_of_birth: null,
-        status: ""
+        _id: user._id,
+        name: user.name,
+        identity_number: user.identity_number,
+        phone: user.phone,
+        address: user.address,
+        email: user.email,
+        date_of_birth: user.date_of_birth ? new Date(user.date_of_birth) : null,
+        status: user.status
     });
     const [errors, setErrors] = useState({});
-const toast = useRef(null);
- const statusOptions = [
-    { label: "סטודנט", value: "student" },
-    { label: "מנהל", value: "manager" },
-    { label: "צוות", value: "staff" }
-];
+
+    const statusOptions = [
+        { label: "סטודנט", value: "student" },
+        { label: "מנהל", value: "manager" },
+        { label: "צוות", value: "staff" }
+    ];
+
+    // בכל פתיחה של הדיאלוג, עדכן את השדות מהמשתמש
+    const openDialog = () => {
+        setFields({
+            _id: user._id,
+            name: user.name,
+            identity_number: user.identity_number,
+            phone: user.phone,
+            address: user.address,
+            email: user.email,
+            date_of_birth: user.date_of_birth ? new Date(user.date_of_birth) : null,
+            status: user.status
+        });
+        setErrors({});
+        setVisible(true);
+    };
 
     const validate = () => {
         const errs = {};
         if (!fields.name) errs.name = "יש להזין שם";
         if (!fields.identity_number || !/^\d{9}$/.test(fields.identity_number)) errs.identity_number = "יש להזין תעודת זהות תקינה (9 ספרות)";
-        if (!fields.password || fields.password.length < 6) errs.password = "סיסמה חייבת להכיל לפחות 6 תווים";
         if (!fields.phone || !/^0\d{8,9}$/.test(fields.phone)) errs.phone = "יש להזין טלפון תקין";
         if (!fields.address) errs.address = "יש להזין כתובת";
         if (!fields.email || !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(fields.email)) errs.email = "יש להזין מייל תקין";
@@ -49,45 +63,31 @@ const toast = useRef(null);
         setErrors({ ...errors, [field]: undefined });
     };
 
-    const handleSubmit = async() => {
-        try {
+    const handleSubmit = async () => {
         if (validate()) {
-            console.log("Submitting user data:", fields);
-           const user= await usersService.createUser(token,fields,role)
-           setChange((prev) => !prev);
-           console.log(user)
-            setVisible(false);
-            setFields({
-                name: "",
-                identity_number: "",
-                password: "",
-                phone: "",
-                address: "",
-                email: "",
-                date_of_birth: null,
-                status: ""
-            });
-            setErrors({});
-        }}
-        catch (error) {
-               toast.current.show({
+            try {
+                const uuser = await usersService.updateUser(token, fields, role);
+                setChange((prev) => !prev);
+                setVisible(false);
+            } catch (err) {
+    toast.current.show({
         severity: 'error',
         summary: 'שגיאה',
-        detail: 'קיים כבר משתמש עם ת.ז. כזה',
+        detail: 'קיים כבר משתמש עם ID כזה',
         life: 4000
-    });
+    });            }
         }
     };
 
     return (
         <>
         <Toast ref={toast} position="top-center" />
-            <Button label="הוסף משתמש" onClick={() => setVisible(true)} />
+            <Button label="עדכון" onClick={openDialog} />
             <Dialog
                 visible={visible}
                 modal
                 onHide={() => setVisible(false)}
-                header="הוספת משתמש חדש"
+                header="עדכון משתמש"
                 style={{ width: '95vw', maxWidth: 500 }}
                 contentStyle={{ padding: 0 }}
             >
@@ -109,16 +109,6 @@ const toast = useRef(null);
                             className={errors.identity_number ? "p-invalid w-full" : "w-full"}
                         />
                         {errors.identity_number && <small className="p-error">{errors.identity_number}</small>}
-                    </div>
-                    <div>
-                        <label>סיסמה</label>
-                        <InputText
-                            type="password"
-                            value={fields.password}
-                            onChange={e => handleChange("password", e.target.value)}
-                            className={errors.password ? "p-invalid w-full" : "w-full"}
-                        />
-                        {errors.password && <small className="p-error">{errors.password}</small>}
                     </div>
                     <div>
                         <label>טלפון</label>
@@ -170,6 +160,11 @@ const toast = useRef(null);
                         />
                         {errors.status && <small className="p-error">{errors.status}</small>}
                     </div>
+                    {errors.general && (
+                        <div>
+                            <small className="p-error">{errors.general}</small>
+                        </div>
+                    )}
                     <div className="flex gap-2 justify-content-end mt-3">
                         <Button label="שמירה" icon="pi pi-check" onClick={handleSubmit} />
                         <Button label="ביטול" icon="pi pi-times" severity="secondary" onClick={() => setVisible(false)} />

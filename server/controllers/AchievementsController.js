@@ -15,9 +15,12 @@ const createAchievement = ('/', async (req, res) => {
     const { userId, achievement, date } = req.body//הid של התלמיד
     if (!userId || !achievement)
         return res.status(400).json({ message: 'enter data' })
-    const achievement1 = await Achievements.create({userId, achievement, date })
+    console.log(`dsds ${userId}, ${achievement}, date: ${date} `)
+   
+        const achievement1 = await Achievements.create({userId, achievement, date })
     if (!achievement1)
         return res.status(404).json({ message: 'achievement did not create' })
+    console.log(achievement1)
     res.json(achievement1)
 })
 
