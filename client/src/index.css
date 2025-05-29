@@ -18,3 +18,10 @@ body {
   border-radius: 10px;
   margin-bottom: 1rem;
 }
+.plans-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    justify-items: center;
+    margin: 2rem 0;
+}

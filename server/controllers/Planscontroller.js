@@ -25,7 +25,8 @@ const createplan=('/',async(req,res)=>{
 })
 
 const updateplan=('/',async(req,res)=>{  
-    const{_id,name,description,number_of_particpants}=req.body
+    const{_id,name,description}=req.body
+    console.log(req.body)
     if(!_id){
         res.status(400).json({message:"id is required"})
     }
@@ -35,7 +36,6 @@ const updateplan=('/',async(req,res)=>{
     }
     plan.name=name
     plan.description=description
-    plan.number_of_particpants=number_of_particpants
     const saver=await plan.save()
     res.json(saver)
 })
