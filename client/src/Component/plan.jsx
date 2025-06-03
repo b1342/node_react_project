@@ -3,7 +3,7 @@ import planServices from '../services/planServices';
 import PlanCard from './plan/planCard';
 import { useSelector } from 'react-redux';
 import AddPlan from './plan/addPlan';
-
+import Participants_plan_table from './plan/participants_plan_table';
 
 const Plan = () => {
     const { token,role } = useSelector((state) => state.token);
@@ -21,7 +21,8 @@ const Plan = () => {
 
     return (
       <>
-      {role!=="student" && <AddPlan setChange={setChange}/>}
+      {role!=="student" ? <AddPlan setChange={setChange}/>:<Participants_plan_table setChange={setChange}/>}
+      
       
         <div className="plans-grid">
             {plans.map((plan) => (<PlanCard plan={plan} setChange={setChange}/>))}

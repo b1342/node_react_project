@@ -24,8 +24,13 @@ const updatePlan = async (data, token) => {
     return res.data;
 };
 
-const updateNumberOfParticipants = async (_id, token) => {
-    const res = await axios.put(`${plansServiceURL}updateNumberOfParticipants`, { _id }, { headers: { Authorization: `Bearer ${token}` } });
+const updateupNumberOfParticipants = async (_id, token) => {
+    const res = await axios.put(`${plansServiceURL}up`, { _id }, { headers: { Authorization: `Bearer ${token}` } });
+    return res.data;
+};
+
+const updatedownNumberOfParticipants = async (_id, token) => {
+    const res = await axios.put(`${plansServiceURL}down`, { _id }, { headers: { Authorization: `Bearer ${token}` } });
     return res.data;
 };
 
@@ -39,6 +44,7 @@ export default {
     getPlanById,
     createPlan,
     updatePlan,
-    updateNumberOfParticipants,
+    updateupNumberOfParticipants,
+    updatedownNumberOfParticipants,
     deletePlan,
 };

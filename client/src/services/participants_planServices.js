@@ -4,7 +4,7 @@ const participantsServiceURL = 'http://localhost:1111/api/participants/';
 
 // קבלת כל ההשתתפויות של סטודנט לפי userId
 const getAllByStudentId = async (userId, token) => {
-    const res = await axios.get(`${participantsServiceURL}student/${userId}`, {
+    const res = await axios.get(`${participantsServiceURL}${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
     });
     return res.data;
@@ -12,7 +12,7 @@ const getAllByStudentId = async (userId, token) => {
 
 // קבלת כל ההשתתפויות של תכנית לפי planId
 const getAllByPlanId = async (planId, token) => {
-    const res = await axios.get(`${participantsServiceURL}plan/${planId}`, {
+    const res = await axios.get(`${participantsServiceURL}getbyplan/${planId}`, {
         headers: { Authorization: `Bearer ${token}` }
     });
     return res.data;
@@ -28,7 +28,7 @@ const createParticipant = async (data, token) => {
 
 // העלאת ניקוד
 const updateUpScore = async (data, token) => {
-    const res = await axios.put(`${participantsServiceURL}upscore`, data, {
+    const res = await axios.put(`${participantsServiceURL}up/`, data, {
         headers: { Authorization: `Bearer ${token}` }
     });
     return res.data;
@@ -36,7 +36,7 @@ const updateUpScore = async (data, token) => {
 
 // הורדת ניקוד
 const updateDownScore = async (data, token) => {
-    const res = await axios.put(`${participantsServiceURL}downscore`, data, {
+    const res = await axios.put(`${participantsServiceURL}down/`, data, {
         headers: { Authorization: `Bearer ${token}` }
     });
     return res.data;

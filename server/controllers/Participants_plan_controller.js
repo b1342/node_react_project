@@ -43,40 +43,30 @@ const createparticipant=('/',async(req,res)=>{
 })
 
 const updateUpScore=('/',async(req,res)=>{
-    const {_id,planId} = req.body
-    if (!_id||!planId) {
+    const {_id} = req.body
+    if (!_id) {
         return res.status(400).json({message: "All fields are required"})
     }
     const participant=await Participants.findById(_id).exec()
     if (!participant) {
         return res.status(400).json({message: "Participant not found"})
     }
-    const plan=await Plans.findById(planId).lean()
-    if (!plan) {
-        return res.status(400).json({message: "Plan not found"})
-    }
-    participant.score = participant.score+plan.number_of_particpants
+    participant.score = participant.score+1
     const updatedParticipant = await participant.save()
     res.json(updatedParticipant)
     
 })
 
 const updateDownScore=('/',async(req,res)=>{
-    const {_id,planId} = req.body
-    if (!_id||!planId) {
+    const {_id} = req.body
+    if (!_id) {
         return res.status(400).json({message: "All fields are required"})
     }
     const participant=await Participants.findById(_id).exec()
     if (!participant) {
         return res.status(400).json({message: "Participant not found"})
     }
-    const plan=await Plans.findById(planId).lean()
-    if (!plan) {
-        return res.status(400).json({message: "Plan not found"})
-    }
-    if (participant.score>plan.number_of_particpants) {
-    participant.score = participant.score-plan.number_of_particpants
-}
+    participant.score = participant.score-1
     const updatedParticipant = await participant.save()
     res.json(updatedParticipant)
     
@@ -91,6 +81,12 @@ const deleteparticipant=('/',async(req,res)=>{
     if (!participant) {
         return res.status(400).json({message: "Participant not found"})
     }
+    const plan = await Plans.findById(participant.planId).exec()
+    if (!plan) {
+        return res.status(400).json({message: "Plan not found"})
+    }
+    plan.number_of_particpants = plan.number_of_particpants-1
+    await plan.save()
     await participant.deleteOne()
     res.json(participant)
 })

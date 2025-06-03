@@ -40,7 +40,7 @@ const updateplan=('/',async(req,res)=>{
     res.json(saver)
 })
 
-const updatenumber_of_particpants=('/',async(req,res)=>{
+const update_up_number_of_particpants=('/',async(req,res)=>{
     const{_id}=req.body
     if(!_id){
         res.status(400).json({message:"id is required"})
@@ -50,6 +50,20 @@ const updatenumber_of_particpants=('/',async(req,res)=>{
         res.status(400).json({message:"dont found plan"})
     }
     plan.number_of_particpants=plan.number_of_particpants+1
+    const saver = await plan.save()
+    res.json(saver)
+})
+
+const update_down_number_of_particpants=('/',async(req,res)=>{
+    const{_id}=req.body
+    if(!_id){
+        res.status(400).json({message:"id is required"})
+    }
+    const plan =await Plans.findById(_id).exec()
+    if(!plan){
+        res.status(400).json({message:"dont found plan"})
+    }
+        plan.number_of_particpants=plan.number_of_particpants-1
     const saver = await plan.save()
     res.json(saver)
 })
@@ -67,4 +81,4 @@ const deleteplan = async (req, res) => {
     res.json({ message: "Plan and all related participants deleted" });
 };
 
-module.exports={getallplans,getplansbyid,createplan,updateplan,updatenumber_of_particpants,deleteplan}
+module.exports={getallplans,getplansbyid,createplan,updateplan,update_down_number_of_particpants,update_up_number_of_particpants,deleteplan}

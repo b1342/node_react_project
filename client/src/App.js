@@ -15,7 +15,7 @@ import Achievement from './Component/achievement.jsx'
 import Plan from './Component/plan.jsx'
 import Staff from './Component/staff.jsx';
 import Student from './Component/student.jsx';
-import ImageGallery from './Component/gallery/ImageGallery.jsx';
+import LandingPage from './routes/homeManager.jsx';
 function App() {
       const { token, role, user } = useSelector((state) => state.token);
 
@@ -23,6 +23,7 @@ function App() {
         <div className="App">
             <Home/>
             <Routes>
+                {/* <Route path='/' element={<LandingPage />} /> */}
                 <Route path='/daveningTimes' element={<DaveningTimes />} />
                 <Route path='/referenceSources' element={<ReferenceSources />} />
                 <Route path='/gallery' element={<Gallery/>} />

@@ -9,7 +9,7 @@ router.get("/getbyplan/:planId",verifyJWTStaff,ppcontroller.getallbyidplan)
 router.post("/",verifyJWT,ppcontroller.createparticipant)
 router.put("/up/",verifyJWTStaff,ppcontroller.updateUpScore)
 router.put("/down/",verifyJWTStaff,ppcontroller.updateDownScore)
-router.delete("/:_id",verifyJWTStaff,ppcontroller.deleteparticipant)
+router.delete("/:_id",verifyJWT,ppcontroller.deleteparticipant)
 
 module.exports=router
  

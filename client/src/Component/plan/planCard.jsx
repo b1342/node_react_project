@@ -5,10 +5,11 @@ import planServices from '../../services/planServices';
 import participantServices from '../../services/participants_planServices';
 import { useSelector } from 'react-redux';
 import UpdatePlan from './updatePlan';
+import Participants_plan_table from './participants_plan_table';
 const PlanCard=({plan ,setChange}) =>{
     
 
- const { token,role ,user} = useSelector((state) => state.token);
+const { token,role ,user} = useSelector((state) => state.token);
     const deletep = async() => {
         console.log(plan);
         
@@ -33,14 +34,19 @@ const PlanCard=({plan ,setChange}) =>{
      }
 
     const footer = (
+         <div style={{ display: 'flex', gap: '0.5em', justifyContent: 'center', flexWrap: 'wrap' }}>
         <>
         {role!=="student" ?(<><UpdatePlan plan={plan} setChange={setChange}/>
-        <Button label="מחיקה " severity="danger" icon="pi pi-trash" style={{ marginLeft: '0.5em' }} onClick={deletep}/></>)
+        <Button label="מחיקה " severity="danger" icon="pi pi-trash" style={{ marginLeft: '0.5em' }} onClick={deletep}/>
+        <Participants_plan_table type="plan" id={plan._id} setChange={setChange}/>
+        </>)
         
-            :(<Button label="הצטרפות" severity="success" icon="pi pi-check" style={{ marginLeft: '0.5em' }} onClick={joinme}/>) 
+            :(<Button label="הצטרפות" severity="success" icon="pi pi-check" style={{ marginLeft: '0.5em' }} onClick={joinme}/>
+             
+            ) 
             }
            
-        </>
+        </></div>
     );
 
     return (

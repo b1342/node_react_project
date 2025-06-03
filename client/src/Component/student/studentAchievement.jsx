@@ -14,7 +14,7 @@ const StudentAchievementDialog = ({ userId }) => {
 
     return (
         <>
-            <Button label="הצג הישגים" icon="pi pi-star" onClick={() => setVisible(true)} />
+            <Button label="הצג הישגים" icon="pi pi-star" className="p-button-warning" onClick={() => setVisible(true)} />
             <Dialog
                 visible={visible}
                 style={{ width: '50vw' }}

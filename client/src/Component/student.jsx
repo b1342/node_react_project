@@ -8,6 +8,7 @@ import UserDialog from './student/addStudent';
 import StudentAchievementDialog from './student/studentAchievement';
 import { useLocation } from 'react-router-dom';
 import UpdateUserDialog from './student/updateUser';
+import Participants_plan_table from './plan/participants_plan_table';
 
 const Student = ({}) => {
 const { token,role } = useSelector((state) => state.token);
@@ -40,8 +41,8 @@ const { token,role } = useSelector((state) => state.token);
             <Button label="מחק" icon="pi pi-trash" className="p-button-danger" onClick={() => deleteUser(user._id)} />
         )
 }
-    const plans=()=>{
-
+    const plans=(rowData)=>{
+        return <Participants_plan_table type={type} id={rowData._id} setChange={setChange}/>
     }
     const achievement = (rowData) => {
     return <StudentAchievementDialog userId={rowData._id} />;

@@ -9,7 +9,8 @@ router.get('/',verifyJWT,planscontroller.getallplans)
 router.get('/:id',verifyJWT,planscontroller.getplansbyid)
 router.post('/',verifyJWTStaff,planscontroller.createplan)
 router.put('/',verifyJWT,planscontroller.updateplan)
-router.put('/number_of_particpants',verifyJWTStaff,planscontroller.updatenumber_of_particpants)
+router.put('/up',verifyJWTStaff,planscontroller.update_up_number_of_particpants)
+router.put('/down',verifyJWTStaff,planscontroller.update_down_number_of_particpants)
 router.delete('/:id',verifyJWTManger,planscontroller.deleteplan)
 
 module.exports=router
