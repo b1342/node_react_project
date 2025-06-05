@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import planServices from '../services/planServices';
-import PlanCard from './plan/planCard';
+import PlanCard from '../Component/plan/planCard';
 import { useSelector } from 'react-redux';
-import AddPlan from './plan/addPlan';
-import Participants_plan_table from './plan/participants_plan_table';
+import AddPlan from '../Component/plan/addPlan';
+import Participants_plan_table from '../Component/plan/participants_plan_table';
 
 const Plan = () => {
     const { token,role } = useSelector((state) => state.token);

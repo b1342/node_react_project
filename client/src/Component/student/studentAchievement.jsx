@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
-import Achievement from '../achievement'; // ודא נתיב נכון
+import Achievement from '../../routes/achievement'; // ודא נתיב נכון
 import AddAchievement from '../achievement/addAchievement'; // ודא נתיב נכון
 
 const StudentAchievementDialog = ({ userId }) => {

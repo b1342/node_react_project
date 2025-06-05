@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
-import Achievement from '../achievement'; 
-import AddAchievement from '../achievement/addAchievement'; 
-import Participants_plan from '../participants_plan';
+// import Achievement from '../achievement'; 
+// import AddAchievement from '../achievement/addAchievement'; 
+import Participants_plan from '../../routes/participants_plan';
 
 const Participants_plan_table = ({type, id,setChange }) => {
     const [visible, setVisible] = useState(false);

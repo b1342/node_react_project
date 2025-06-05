@@ -69,7 +69,7 @@ export default function ImageCard({ image, setChange }) {
         />
         {role === 'manager' && (
           <Button
-            label={`public- ${image.public}`}
+            label={image.public?'ציבורי' : 'פרטי'}
             severity="secondary"
             icon="pi pi-times"
             size="small"

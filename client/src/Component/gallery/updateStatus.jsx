@@ -5,13 +5,19 @@ import galleryService from '../../services/galleryService';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 export default function UpdateStatus({ image ,setChanges}) {
-  const { token } = useSelector((state) => state.token);
+  const {role, token } = useSelector((state) => state.token);
     const [change, setChange] = useState('');
   const items = [
     { label: 'מהזמן האחרון', value: 'from_the_last_time' },
     { label: 'סיומים', value: 'syumim' },
     { label: 'טיולים', value: 'trips' },
     { label: 'יום בישיבה', value: 'day_in_yeshiva' },
+      ...(role === 'manager'
+    ? [
+        { label: 'זמני תפילות', value: 'zmaney_tfilot' },
+        { label: 'מראי מקומות', value: 'marhey_mekomot' }
+      ]
+    : [])
   ];
 
   const changeStatus = () => {

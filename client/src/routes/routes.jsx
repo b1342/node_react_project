@@ -1,7 +1,4 @@
-import React from 'react';
 import { Menubar } from 'primereact/menubar';
-import { InputText } from 'primereact/inputtext';
-import { Badge } from 'primereact/badge';
 import { Avatar } from 'primereact/avatar';  
 import { Button } from 'primereact/button';
 import Login from '../homeComp/login'
@@ -134,7 +131,7 @@ const Routerss=()=> {
         <div className="flex align-items-center gap-2">
            { role == null ?<Login/>:
            <><Avatar label={user.name} size="large" shape="circle" className="mr-2" />
-                   <h3>{role}</h3>
+                   <h3>{role==='manager'?'מנהל':role==='staff'?'איש צוות ':'תלמיד'}</h3>
                    <Button onClick={() => { logout() }}> להתנתקות </Button></>}
            
         </div> 

@@ -1,21 +1,18 @@
 
-import Routerss from './Component/routes.jsx'
+import Routerss from './routes/routes.jsx'
 
 import { Route, Routes } from 'react-router-dom'
-import PublicGallery from './homeComp/gallery.jsx';
-import DaveningTimes from './homeComp/daveningTimes.jsx';
-import ReferenceSources from './homeComp/referenceSources.jsx';
 import 'primereact/resources/themes/lara-light-blue/theme.css'; 
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import { useDispatch,useSelector } from 'react-redux';
-import Gallery from './Component/gallery.jsx';
-import Achievement from './Component/achievement.jsx'
-import Plan from './Component/plan.jsx'
-import Staff from './Component/staff.jsx';
-import Student from './Component/student.jsx';
-import HonePage from './Component/homePage.jsx';
+import Gallery from './routes/gallery.jsx';
+import Achievement from './routes/achievement.jsx'
+import Plan from './routes/plan.jsx'
+import Staff from './routes/staff.jsx';
+import Student from './routes/student.jsx';
+import HonePage from './routes/homePage.jsx';
 function App() {
       const { token, role, user } = useSelector((state) => state.token);
 

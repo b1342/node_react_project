@@ -4,15 +4,16 @@ import { Column } from 'primereact/column';
 import React, { useEffect, useState } from 'react';
 import usersService from '../services/userServices'
 import { useSelector } from 'react-redux';
-import UserDialog from './student/addStudent';
-import StudentAchievementDialog from './student/studentAchievement';
-import { useLocation } from 'react-router-dom';
-import UpdateUserDialog from './student/updateUser';
-const Staff = ({}) => {
+import UserDialog from '../Component/student/addStudent';
+import StudentAchievementDialog from '../Component/student/studentAchievement';
+import UpdateUserDialog from '../Component/student/updateUser';
+import Participants_plan_table from '../Component/plan/participants_plan_table';
+
+const Student = ({}) => {
 const { token,role } = useSelector((state) => state.token);
     const [students, setStudents] = useState([]);
     const[change,setChange]=useState(false)
-     const type='staff'
+    const type='student'
 
 
     const getUsersData = async(type) => {
@@ -39,14 +40,17 @@ const { token,role } = useSelector((state) => state.token);
             <Button label="מחק" icon="pi pi-trash" className="p-button-danger" onClick={() => deleteUser(user._id)} />
         )
 }
-    const plans=()=>{
-
+    const plans=(rowData)=>{
+        return <Participants_plan_table type={type} id={rowData._id} setChange={setChange}/>
     }
-
-
+    const achievement = (rowData) => {
+    return <StudentAchievementDialog userId={rowData._id} />;
+};
 const update = (rowData) => {
    return <UpdateUserDialog user={rowData} setChange={setChange}/>
 }
+
+
     const usersTable = (users) => {
         return (
             <DataTable value={users} tableStyle={{ minWidth: '50rem' }}>
@@ -57,6 +61,8 @@ const update = (rowData) => {
                 <Column field="email" header="כתובת מייל"></Column>
                 <Column field="date_of_birth" header="תאריך לידה"></Column>
                 <Column field="status" header="סטטוס"></Column>
+                <Column header="מבצעים" body={plans} ></Column>
+                <Column header="השגים" body={achievement}></Column>
                 <Column header="מחיקה" body={deleteu}></Column>
                 <Column header="עדכון" body={update}></Column>
             </DataTable>
@@ -71,4 +77,4 @@ const update = (rowData) => {
     );
 };
 
-export default Staff;
+export default Student;

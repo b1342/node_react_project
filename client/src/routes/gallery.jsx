@@ -3,8 +3,8 @@ import { useLocation } from 'react-router-dom';
 import galleryService from '../services/galleryService';
 import { useSelector } from 'react-redux';
 import { Galleria } from 'primereact/galleria';
-import ImageCard from './gallery/ImageCard';
-import UploadImageDialog from './gallery/UploadImage';
+import ImageCard from '../Component/gallery/ImageCard';
+import UploadImageDialog from '../Component/gallery/UploadImage';
 const Gallery = () => {
   const { token,role } = useSelector((state) => state.token);  
   const location = useLocation();
