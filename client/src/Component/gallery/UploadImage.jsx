@@ -5,13 +5,27 @@ import { Button } from 'primereact/button';
 import { FileUpload } from 'primereact/fileupload';
 import galleryService from '../../services/galleryService';
 import { useDispatch,useSelector } from 'react-redux';
-
+import { Dropdown } from 'primereact/dropdown';
 export default function UploadImageDialog({setChange}) {
   const { token, role, user } = useSelector((state) => state.token);
     const [visible, setVisible] = useState(false);
     const [title, setTitle] = useState('');
     const [file, setFile] = useState(null);
+    const [status, setStatus] = useState('');
 
+    const items = [
+    { label: 'מהזמן האחרון', value: 'from_the_last_time' },
+    { label: 'סיומים', value: 'syumim' },
+    { label: 'טיולים', value: 'trips' },
+    { label: 'יום בישיבה', value: 'day_in_yeshiva' },
+      ...(role === 'manager'
+    ? [
+        { label: 'זמני תפילות', value: 'zmaney_tfilot' },
+        { label: 'מראי מקומות', value: 'marhey_mekomot' }
+      ]
+    : [])
+    
+  ];
     const handleFileSelect = (e) => {
         setFile(e.files && e.files[0]);
     };
@@ -21,6 +35,7 @@ export default function UploadImageDialog({setChange}) {
         const formData = new FormData();
         formData.append('image', file); 
         formData.append('title', title);
+        status && formData.append('status', status);
         await galleryService.createNewGalleryItem(formData, token);
         setVisible(false);
         setTitle('');
@@ -51,6 +66,13 @@ export default function UploadImageDialog({setChange}) {
                         onSelect={handleFileSelect}
                         emptyTemplate={<p className="m-0">גרור תמונה לכאן או לחץ לבחירה</p>}
                     />
+                          <Dropdown
+                            value={status}
+                            options={items}
+                            onChange={(e) => setStatus(e.value)}
+                            placeholder="בחר סטטוס"
+                            style={{ minWidth: 120, fontSize: '0.85rem' }}
+                        />
                     <Button
                         label="העלה"
                         icon="pi pi-upload"

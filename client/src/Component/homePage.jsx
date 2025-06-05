@@ -1,13 +1,15 @@
 import React, { useState, useRef } from 'react';
 
-//import promoVideo from '../promoVideo.mp4';
+// import promoVideo from '../CA05 -  Arithmetic Logic.mp4';
 
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import axios from 'axios'
+import { useDispatch,useSelector } from 'react-redux';
 
 const HomePage = () => {
+  const { token, role, user } = useSelector((state) => state.token);
   const [inquiryText, setInquiryText] = useState('');
   const toast = useRef(null);
 
@@ -40,10 +42,11 @@ const HomePage = () => {
   };
 
 
-  return (
+ return (
+  token === null ? (
     <div className="home-container">
       <Toast ref={toast} />
-<div className="institution-description">
+      <div className="institution-description">
         <h1> !ברוכים הבאים לישיבת ברכת חיים</h1>
         <p>
           אנו גאים להציג בפניכם את המוסד הייחודי שלנו, אשר ממוקם בלב הקהילה ומהווה מרכז
@@ -68,16 +71,16 @@ const HomePage = () => {
           הדפדפן שלך אינו תומך בוידאו.
         </video>
       </div> */}
-<div className="youtube-section">
-  <div className="youtube-wrapper">
-    <iframe
-      src="https://www.youtube.com/embed/LEQoBPMa0Zw?start=2"
-      title="YouTube video player"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-    ></iframe>
-  </div>
-</div>
+      <div className="youtube-section">
+        <div className="youtube-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/LEQoBPMa0Zw?start=2"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
+      </div>
       
       <div className="inquiry-section">
         <h2>יש לך שאלה? פנה אלינו!</h2>
@@ -99,7 +102,9 @@ const HomePage = () => {
          style={{ backgroundColor: 'rgb(5, 195, 220)',borderColor: 'rgb(5, 195, 220)'}}/>
       </div>
     </div>
-  );
+  ) : null
+
+  ); 
 };
 export default HomePage;
 

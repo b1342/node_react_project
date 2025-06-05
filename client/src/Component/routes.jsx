@@ -8,39 +8,30 @@ import Login from '../homeComp/login'
 import { useDispatch,useSelector } from 'react-redux';
 import { logOut } from '../redux/tokenSlice';
 import {useNavigate } from 'react-router-dom';
-export default function Home() {
+const Routerss=()=> {
       const { token, role, user } = useSelector((state) => state.token);
       const dispatch = useDispatch();
       const navigate =useNavigate();
-    //   const itemRenderer = (item) => (
-        
-    //     <a className="flex align-items-center p-menuitem-link">
-    //         <span className={item.icon} />
-    //         <span className="mx-2">{item.label}</span>
-    //         {item.badge && <Badge className="ml-auto" value={item.badge} />}
-    //         {item.shortcut && <span className="ml-auto border-1 surface-border border-round surface-100 text-xs p-1">{item.shortcut}</span>}
-    //     </a>
-    // );
     const items = [
-        {
+        ...(role === null ? [{
             label: 'בית',
             icon: 'pi pi-home',
             command:()=>{
                 navigate('./')
                }
-        },
+        }
         ,
-        ...(role === null ? [{
+        {
         label: ' זמני תפילות',
         icon: 'pi pi-star',
             command: () => {
-                navigate('./daveningTimes')
+                navigate('./gallery', { state: { type: 'zmaney_tfilot' } })
             }
         },{
             label: 'מראי מקומות',
             icon: 'pi pi-star',
             command:()=>{
-                navigate('./referenceSources')
+                navigate('./gallery' ,{ state: { type: 'marhey_mekomot' } })
                }
          }] : []),
          ...(role==="staff"|role==="manager" ? [
@@ -110,6 +101,22 @@ export default function Home() {
                        }
                     
                 },
+                ...(role === 'manager' ? [{
+                    label: 'מראי מקומות',
+                    icon: 'pi pi-pencil',
+                    command:()=>{
+                        navigate('./gallery', { state: { type: 'marhey_mekomot' } });
+                       }
+                    
+                },
+                {
+                    label: 'זמני תפילות',
+                    icon: 'pi pi-pencil',
+                    command:()=>{
+                        navigate('./gallery', { state: { type: 'zmaney_tfilot' } });
+                       }
+                    
+                }] : []),
                 {
                     separator: true
                 }
@@ -121,7 +128,7 @@ export default function Home() {
             navigate('./')
                
         }
-    const start = <img alt="logo" src="https://primefaces.org/cdn/primereact/images/logo.png" height="40" className="mr-2"></img>;
+    const start = <img alt="logo" src="/bircatFavicon.jpg" height="40" className="mr-2"></img>;
     const end = (
 
         <div className="flex align-items-center gap-2">
@@ -139,4 +146,4 @@ export default function Home() {
         </div>
     )
 }
-        
+export default Routerss;        

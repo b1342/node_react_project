@@ -1,5 +1,5 @@
 
-import Home from './routes/home.jsx'
+import Routerss from './Component/routes.jsx'
 
 import { Route, Routes } from 'react-router-dom'
 import PublicGallery from './homeComp/gallery.jsx';
@@ -15,17 +15,18 @@ import Achievement from './Component/achievement.jsx'
 import Plan from './Component/plan.jsx'
 import Staff from './Component/staff.jsx';
 import Student from './Component/student.jsx';
-import HonePage from './routes/homeManager.jsx';
+import HonePage from './Component/homePage.jsx';
 function App() {
       const { token, role, user } = useSelector((state) => state.token);
 
     return (
         <div className="App">
-            <Home/>
+            <Routerss/> 
             <Routes>
                 <Route path='/' element={<HonePage />} />
-                <Route path='/daveningTimes' element={<DaveningTimes />} />
-                <Route path='/referenceSources' element={<ReferenceSources />} />
+                <Route path='/' element={<HonePage />} />
+                <Route path='/daveningTimes' element={<Gallery />} />
+                <Route path='/referenceSources' element={<Gallery />} />
                 <Route path='/gallery' element={<Gallery/>} />
                 <Route path='/achievement' element={<Achievement />} />
                 <Route path='/plan' element={<Plan/>} />
