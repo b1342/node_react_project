@@ -1,60 +1,105 @@
-import React, { useState } from 'react';
-import { Button } from 'primereact/button';
-import { InputText } from 'primereact/inputtext';
+import React, { useState, useRef } from 'react';
+
+//import promoVideo from '../promoVideo.mp4';
+
 import { InputTextarea } from 'primereact/inputtextarea';
+import { Button } from 'primereact/button';
+import { Toast } from 'primereact/toast';
+import axios from 'axios'
 
-export default function LandingPage() {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+const HomePage = () => {
+  const [inquiryText, setInquiryText] = useState('');
+  const toast = useRef(null);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const sendInquiry = async () => {
+    if (!inquiryText.trim()) {
+      toast.current.show({ severity: 'warn', summary: 'אזהרה', detail: 'נא למלא את תוכן הפנייה', life: 3000 });
+      return;
+    }
+
+    try {
+
+      const response = await axios.post('http://localhost:1111/api/contact', {
+        inquiryText: inquiryText
+      });
+
+      toast.current.show({ severity: 'success', summary: 'הצלחה', detail: response.data.message, life: 3000 });
+      setInquiryText('');
+    } catch (error) {
+      console.error('Error sending inquiry:', error);
+      toast.current.show({ severity: 'error', summary: 'שגיאה', detail: 'שגיאה בשליחת הפנייה. נסה שוב מאוחר יותר.', life: 3000 });
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert(`תודה על פנייתך, ${formData.name}!`);
-    setFormData({ name: '', email: '', message: '' });
+  const openLink1 = () => {
+    window.open('https://www.matara.pro/nedarimplus/online/?mosad=7013774', '_blank', 'noopener noreferrer');
   };
+
+  const openLink2 = () => {
+    window.open('https://www.matara.pro/nedarimplus/online/?mosad=7013774', '_blank', 'noopener noreferrer');
+  };
+
 
   return (
-    <div className="flex flex-col items-center justify-center p-8 bg-gray-100 min-h-screen">
-      {/* התמונה */}
-      <img
-        src="https://images.unsplash.com/photo-1606788075767-4d98a781bc86"
-        alt="תמונה יפה"
-        className="w-3/4 max-w-4xl rounded-xl shadow-lg mb-8"
-      />
+    <div className="home-container">
+      <Toast ref={toast} />
+<div className="institution-description">
+        <h1> !ברוכים הבאים לישיבת ברכת חיים</h1>
+        <p>
+          אנו גאים להציג בפניכם את המוסד הייחודי שלנו, אשר ממוקם בלב הקהילה ומהווה מרכז
+          לצמיחה, למידה והתפתחות. אנו מאמינים במצוינות, חדשנות ובמתן כלים מעשיים
+          לבוגרינו כדי שיצליחו בעולם המשתנה של היום.
+        </p>
+        <p>
+          במוסדנו, אנו מקדישים תשומת לב מיוחדת לכל תלמיד, ומספקים סביבת למידה תומכת
+          ומאתגרת. הצוות שלנו מורכב ממורים מנוסים ומסורים, החותרים להעניק את הידע
+          והכישורים הנדרשים להצלחה אישית ומקצועית.
+        </p>
+        <p>
+          הפרויקט הזה נועד להמחיש את העשייה העשירה והרבגונית במוסדנו, ולהציג את
+          התוצאות המרשימות של מסירות והשקעה. אנו מזמינים אתכם להצטרף אלינו למסע
+          המרתק של למידה והשפעה.
+        </p>
+      </div>
 
-      {/* המלל */}
-      <h2 className="text-3xl font-bold mb-4 text-center">ברוכים הבאים לאתר שלנו!</h2>
-      <p className="text-lg text-center mb-6 max-w-2xl">
-        כאן תוכלו ללמוד, להתחבר, ולתמוך בפעילות שלנו. כל תרומה שלכם עוזרת לנו להמשיך בעשייה.
-      </p>
+      {/* <div className="video-section">
+        <video className="promo-video" controls autoPlay loop muted>
+          <source src={promoVideo} type="video/mp4" />
+          הדפדפן שלך אינו תומך בוידאו.
+        </video>
+      </div> */}
+<div className="youtube-section">
+  <div className="youtube-wrapper">
+    <iframe
+      src="https://www.youtube.com/embed/LEQoBPMa0Zw?start=2"
+      title="YouTube video player"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen
+    ></iframe>
+  </div>
+</div>
+      
+      <div className="inquiry-section">
+        <h2>יש לך שאלה? פנה אלינו!</h2>
+        <InputTextarea
+          value={inquiryText}
+          onChange={(e) => setInquiryText(e.target.value)}
+          rows={5}
+          cols={50}
+          placeholder="כתוב את הפנייה שלך כאן..."
+        />
+        <Button label="שלח פנייה" onClick={sendInquiry} className="mt-3" />
+      </div>
 
-      {/* כפתור תרומות */}
-      <a href="https://donate.example.com" target="_blank" rel="noopener noreferrer">
-        <Button label="לתמיכה ותרומות" className="p-button-lg p-button-success mb-12" />
-      </a>
-
-      {/* טופס ליצירת קשר */}
-      <div className="w-full max-w-lg p-6 bg-white rounded-xl shadow">
-        <h3 className="text-2xl font-bold mb-4 text-center">צרו קשר</h3>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <span className="p-float-label">
-            <InputText id="name" name="name" value={formData.name} onChange={handleChange} />
-            <label htmlFor="name">שם</label>
-          </span>
-          <span className="p-float-label">
-            <InputText id="email" name="email" value={formData.email} onChange={handleChange} />
-            <label htmlFor="email">אימייל</label>
-          </span>
-          <span className="p-float-label">
-            <InputTextarea id="message" name="message" value={formData.message} onChange={handleChange} rows={4} />
-            <label htmlFor="message">הודעה</label>
-          </span>
-          <Button label="שלח פניה" type="submit" className="p-button-primary mt-2" />
-        </form>
+      <div className="side-buttons">
+        <Button label="לתרומות מישראל " rounded onClick={openLink1}
+          style={{ backgroundColor: 'rgb(5, 129, 196)',borderColor: 'rgb(5, 129, 196)'}} />
+        <br />
+        <Button label= 'לתרומות מארה"ב' rounded onClick={openLink2} 
+         style={{ backgroundColor: 'rgb(5, 195, 220)',borderColor: 'rgb(5, 195, 220)'}}/>
       </div>
     </div>
   );
-}
+};
+export default HomePage;
+

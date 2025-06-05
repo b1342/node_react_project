@@ -1,3 +1,114 @@
+.home-container {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    padding: 20px;
+    background-color: #f5f5f5; /* החזרת צבע רקע ל-home-container מכיוון שהוידאו לא יהיה מסך מלא */
+    min-height: calc(100vh - var(--navbar-height, 60px)); /* החזרת גובה מינימלי עם התחשבות ב-navbar */
+    position: relative; 
+    z-index: auto; /* אין צורך ב-z-index ספציפי כאן */
+}
+.youtube-section {
+  width: 100vw;
+  max-width: 900px;
+  margin: 40px auto 30px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.youtube-wrapper {
+  width: 100%;
+  aspect-ratio: 16/9;
+  min-height: 320px;
+  background: #000;
+  overflow: hidden;
+  border-radius: 0;
+  box-shadow: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.youtube-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  min-width: 320px;
+  border: none;
+  display: block;
+  background: #000;
+}
+/* סגנון לסעיף הוידאו - נשנה כדי שיהיה קטן יותר */
+.video-section {
+    width: 80vw; /* דוגמה: 80% מרוחב ה-viewport. שנה לפי הצורך (לדוגמה: 900px) */
+    max-width: 900px; /* רוחב מקסימלי שפירטת בהתחלה - עדיין רלוונטי */
+    height: auto; /* חשוב: גובה אוטומטי כדי לשמור על יחס גובה-רוחב */
+    margin-bottom: 30px; /* החזרת מרווח תחתון */
+    border-radius: 8px; /* החזרת פינות מעוגלות */
+    overflow: hidden; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* החזרת צל */
+    position: relative; /* אין צורך ב-fixed כעת */
+    z-index: auto; /* אין צורך ב-z-index ספציפי כאן */
+    top: auto; /* איפוס אם היה קודם fixed */
+    left: auto; /* איפוס אם היה קודם fixed */
+}
+
+.promo-video {
+    width: 100%; /* וידאו ימלא את רוחב ה-video-section */
+    height: auto; /* וידאו יתאים את גובהו לשמירה על פרופורציות */
+    display: block; 
+    object-fit: fill; /* או cover, תלוי איך אתה רוצה להתמודד עם פרופורציות.
+                         fill: ימתח את הוידאו למילוי מלא של האלמנט, ייתכן שייראה מעוות.
+                         cover: ימלא תוך חיתוך חלקים אם הפרופורציות שונות.
+                         contain: יתאים את הוידאו בתוך האלמנט בלי לחתוך, ייתכן שיופיעו פסים שחורים.
+                         אני ממליץ על 'cover' או פשוט להשאיר בלי object-fit (שזה ברירת מחדל 'fill' או 'contain' בדפדפנים שונים) ולתת ל-height: auto לעשות את העבודה. */
+    position: static; /* שינוי: הוידאו לא יהיה ממוקם אבסולוטית בתוך ה-video-section */
+    /* הסר את top, left, z-index מכיוון שהוידאו אינו רקע מסך מלא */
+    top: auto;
+    left: auto;
+    z-index: auto;
+}
+
+/* סגנון לסעיף תיאור המוסד */
+.institution-description {
+    width: 100%;
+    max-width: 800px; 
+    text-align: center; 
+    background-color: #ffffff; /* החזרת רקע לבן מלא */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
+    margin-bottom: 30px; 
+    position: static; /* אין צורך ב-relative ו-z-index מיוחדים */
+    z-index: auto;
+}
+
+/* סגנון לסעיף הפנייה במייל */
+.inquiry-section {
+    width: 100%;
+    max-width: 600px; 
+    text-align: center;
+    background-color: #ffffff; /* החזרת רקע לבן מלא */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 50px; 
+    position: static; /* אין צורך ב-relative ו-z-index מיוחדים */
+    z-index: auto;
+}
+
+/* הכפתורים הצדדיים יישארו fixed ועם z-index גבוה, וזה בסדר. */
+.side-buttons {
+    position: fixed; 
+    top: 50%; 
+    left: 20px; 
+    transform: translateY(-50%); 
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-start; 
+    z-index: 1000; 
+}
 span.flag {
     width: 44px;
     height: 30px;
